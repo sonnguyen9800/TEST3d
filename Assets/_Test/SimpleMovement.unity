@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 669123004}
   - component: {fileID: 669123005}
   - component: {fileID: 669123006}
+  - component: {fileID: 669123007}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -612,10 +613,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &669123004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,12 +624,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669122998}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 857322f306be2f848bfbbfef9743355d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 669123006}
+  _moveSpeed: 1
+  _rotationSpeed: 2
+  jumpHeight: 2
+  gravity: -9.81
 --- !u!114 &669123005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,6 +793,26 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &669123007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669122998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3043eb24404f439457cabe257d8d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 2
+  MoveSpeed: 5
+  jumpForce: 10
+  fallMultiplier: 2.5
+  ascendMultiplier: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1187131550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,8 +1740,8 @@ GameObject:
   - component: {fileID: 2143517363}
   - component: {fileID: 2143517362}
   - component: {fileID: 2143517361}
-  m_Layer: 0
-  m_Name: Quad
+  m_Layer: 6
+  m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
