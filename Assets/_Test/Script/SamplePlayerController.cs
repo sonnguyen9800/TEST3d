@@ -13,6 +13,7 @@ namespace _Test.Script
     private float moveHorizontal;
     private float moveForward;
 
+    [SerializeField] private Transform _targetLookUp;
     // Jumping
     public float jumpForce = 10f;
     public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
@@ -34,25 +35,19 @@ namespace _Test.Script
 
     private void OnCollisionEnter(Collision other)
     {
-    
+
         // Check if the collided layer is part of the target layer mask
-        if (((1 << other.gameObject.layer) & groundLayer) != 0)
-        {
-            Debug.LogError("On Ground");
-            isGrounded = true;
-            
-        }
+        if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
+        Debug.LogError("On Ground");
+        isGrounded = true;
     }
 
     
     private void OnCollisionExit(Collision other)
     {
-        if (((1 << other.gameObject.layer) & groundLayer) != 0)
-        {
-            Debug.LogError("On Air");
-            isGrounded = false;
-            
-        }
+        if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
+        Debug.LogError("On Air");
+        isGrounded = false;
     }
 
     void Start()
@@ -85,15 +80,6 @@ namespace _Test.Script
     
     void Update()
     {
-        // moveHorizontal = Input.GetAxisRaw("Horizontal");
-        // moveForward = Input.GetAxisRaw("Vertical");
-
-       // RotateCamera();
-
-        // if (Input.GetButtonDown("Jump") && isGrounded)
-        // {
-        //     Jump();
-        // }
 
         // Checking when we're on the ground and keeping track of our ground check delay
         if (!isGrounded && groundCheckTimer <= 0f)
@@ -114,6 +100,9 @@ namespace _Test.Script
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
+        Vector2 direction = new Vector2(_targetLookUp.position.x - transform.position.x, _targetLookUp.position.y - transform.position.y);
+        Debug.DrawRay(rayOrigin, direction, Color.green);
+        Debug.DrawLine(_targetLookUp.transform.position, transform.position);
 
     }
 
@@ -121,6 +110,43 @@ namespace _Test.Script
     {
         MovePlayer();
         ApplyJumpPhysics();
+        RotatePlayer();
+    }
+
+    
+    
+    private void RotatePlayer()
+    {
+
+        Vector3 mousePos = Input.mousePosition;
+        var mousePose = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Vector2 direction = _targetLookUp.transform.position - transform.position;
+        
+        //transform.Rotate(newX, 0, 0);
+        //transform.localEulerAngles+=new Vector3(deltaRotation,0,0);
+        //transform.Rotate(deltaRotation, 0, 0, Space.Self);
+        
+        transform.rotation = Quaternion.identity;
+        direction.x = 0;
+        float xAngle = Vector3.Angle(transform.forward, direction);
+        if (direction.y < 0)
+            xAngle *= -1;
+        transform.rotation = Quaternion.Euler(xAngle, 0, 0);
+//         headBone.rotation = Quaternon.identity; //Just to simplify calculation lets remove the current rotation for now
+//
+// //Get the vector from your head to the opponent
+//         Vector3 toOpponent = opponent - headBone.position;
+//         toOpponent.x = 0; //Put the vector in the YZ plane so that we get a simple x rotation. This is ultimately the direction we want to look in.
+//
+//         float xAngle = Vector3.Angle(headbone.forward, toOpponent);
+// //Returns the shortest angle (between 0 and 180), so we need to normalize from -180 to 180
+//         if(toOpponent.y < 0) xAngle *= -1;
+//
+//         headBone.rotation = Quaternion.Euler(xAngle, 0, 0);
+
+
+
     }
 
     void MovePlayer()
