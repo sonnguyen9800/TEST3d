@@ -490,8 +490,9 @@ GameObject:
   - component: {fileID: 669123006}
   - component: {fileID: 669123007}
   - component: {fileID: 669123008}
+  - component: {fileID: 669123009}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: CharacterPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +537,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 56924937f64f129419a1e1a77bbd15fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -811,6 +812,20 @@ CapsuleCollider:
   m_Height: 2.000001
   m_Direction: 1
   m_Center: {x: 0, y: 0.00000017881393, z: 2.1316282e-14}
+--- !u!114 &669123009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669122998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a56b40edb5c46c692ae93ab399de4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectColor: {r: 1, g: 1, b: 1, a: 1}
+  _meshRenderer: {fileID: 669123001}
 --- !u!1 &1187131550
 GameObject:
   m_ObjectHideFlags: 0
