@@ -1,15 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _Test.Script
 {
     public class SamplePlayerController : MonoBehaviour
     {
-          // Camera Rotation
-    public float mouseSensitivity = 2f;
-    private float verticalRotation = 0f;
-    private Transform cameraTransform;
-    
     // Ground Movement
+    [SerializeField]
     private Rigidbody rb;
     public float MoveSpeed = 5f;
     private float moveHorizontal;
@@ -19,33 +17,67 @@ namespace _Test.Script
     public float jumpForce = 10f;
     public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
     public float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
+    
+    [SerializeField]
     private bool isGrounded = true;
+    
     public LayerMask groundLayer;
+    [SerializeField]
     private float groundCheckTimer = 0f;
+    [SerializeField]
     private float groundCheckDelay = 0.3f;
     private float playerHeight;
+    [SerializeField]
     private float raycastDistance;
+
+    private Vector2 _moveInput;
+
+    private void OnCollisionEnter(Collision other)
+    {
+    
+        // Check if the collided layer is part of the target layer mask
+        if (((1 << other.gameObject.layer) & groundLayer) != 0)
+        {
+            Debug.LogError("On Ground");
+            isGrounded = true;
+            
+        }
+    }
+
+    
+    private void OnCollisionExit(Collision other)
+    {
+        if (((1 << other.gameObject.layer) & groundLayer) != 0)
+        {
+            Debug.LogError("On Air");
+            isGrounded = false;
+            
+        }
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        cameraTransform = Camera.main.transform;
 
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
         raycastDistance = (playerHeight / 2) + 0.2f;
-
-        // Hides the mouse
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
     }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        _moveInput = context.performed ? context.ReadValue<Vector2>() : Vector2.zero;
+        // HandleMovement(res.x, res.y);
+    }
+
 
     
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveForward = Input.GetAxisRaw("Vertical");
+        // moveHorizontal = Input.GetAxisRaw("Horizontal");
+        // moveForward = Input.GetAxisRaw("Vertical");
 
        // RotateCamera();
 
@@ -58,12 +90,21 @@ namespace _Test.Script
         if (!isGrounded && groundCheckTimer <= 0f)
         {
             Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-            isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
+            //isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
+            Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
+
         }
         else
         {
             groundCheckTimer -= Time.deltaTime;
         }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+        Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
 
     }
 
@@ -76,6 +117,8 @@ namespace _Test.Script
     void MovePlayer()
     {
 
+        moveHorizontal = _moveInput.x;
+        moveForward = _moveInput.y;
         Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
         Vector3 targetVelocity = movement * MoveSpeed;
 
@@ -92,16 +135,6 @@ namespace _Test.Script
         }
     }
 
-    void RotateCamera()
-    {
-        float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
-        transform.Rotate(0, horizontalRotation, 0);
-
-        verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
-
-        cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-    }
 
     void Jump()
     {
