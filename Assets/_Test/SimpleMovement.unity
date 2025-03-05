@@ -665,9 +665,9 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
-        m_MethodName: Jump
+      - m_Target: {fileID: 669123007}
+        m_TargetAssemblyTypeName: _Test.Script.SamplePlayerController, Assembly-CSharp
+        m_MethodName: OnJumpTrigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

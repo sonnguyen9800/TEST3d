@@ -72,7 +72,16 @@ namespace _Test.Script
         // HandleMovement(res.x, res.y);
     }
 
+    public void OnJumpTrigger()
+    {
+        if (isGrounded)
+            Jump();
+    }
 
+    public void OnMouseMove(InputAction.CallbackContext context)
+    {
+        
+    }
     
     void Update()
     {
@@ -81,10 +90,10 @@ namespace _Test.Script
 
        // RotateCamera();
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            Jump();
-        }
+        // if (Input.GetButtonDown("Jump") && isGrounded)
+        // {
+        //     Jump();
+        // }
 
         // Checking when we're on the ground and keeping track of our ground check delay
         if (!isGrounded && groundCheckTimer <= 0f)
