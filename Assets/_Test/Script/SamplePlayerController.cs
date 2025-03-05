@@ -100,9 +100,9 @@ namespace _Test.Script
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
-        Vector2 direction = new Vector2(_targetLookUp.position.x - transform.position.x, _targetLookUp.position.y - transform.position.y);
-        Debug.DrawRay(rayOrigin, direction, Color.green);
-        Debug.DrawLine(_targetLookUp.transform.position, transform.position);
+        Vector3 direction = _targetLookUp.transform.position - transform.position;
+        Debug.DrawRay(transform.position, direction, Color.green);
+        //Debug.DrawLine(_targetLookUp.transform.position, transform.position);
 
     }
 
