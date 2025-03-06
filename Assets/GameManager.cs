@@ -28,22 +28,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        _gameManagerInstanceId = GetInstanceID();
-        Debug.Log($"GameManager Awake: Instance ID {_gameManagerInstanceId}");
-        _playerSpawner.OnLocalPlayerSpawned += OnLocalPlayerSpawned;
-
-        ToggleCanvas(true);
-    }
-
-    private void OnLocalPlayerSpawned(NetworkObject player)
-    {
-        Debug.Log($"GameManager (ID: {_gameManagerInstanceId}) received player spawned event: {player != null}");
-
-        Debug.Log($"GameManager received player spawned event: {player != null}");
-        _cachedLocalPlayer = player;
+        ToggleCanvas(false);
     }
     
-
     public void OnRandomColorClick()
     {
         Debug.Log($"OnRandomColorClick called on GameManager (ID: {_gameManagerInstanceId})");

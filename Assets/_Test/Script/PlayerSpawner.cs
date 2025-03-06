@@ -26,6 +26,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
         _onPlayerSpawned?.Invoke();
         OnLocalPlayerSpawned?.Invoke(_localCharacter);
         GameManager.Instance.SetLocalPlayer(_localCharacter);
+        GameManager.Instance.ToggleCanvas(true);
     }
     
     public void PlayerLeft(PlayerRef player)
@@ -33,5 +34,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
         if (player != Runner.LocalPlayer) return;
         _onPlayerLeft?.Invoke();
         _localCharacter = null;
+        GameManager.Instance.ToggleCanvas(false);
+
     }
 }
