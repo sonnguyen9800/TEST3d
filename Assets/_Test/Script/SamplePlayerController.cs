@@ -129,13 +129,6 @@ namespace _Test.Script
             Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
         }
 
-        void FixedUpdate()
-        {
-            return;
-            MovePlayer();
-            ApplyJumpPhysics();
-        }
-
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
@@ -166,7 +159,7 @@ namespace _Test.Script
             // If we aren't moving and are on the ground, stop velocity so we don't slide
             if (isGrounded && moveHorizontal == 0 && moveForward == 0)
             {
-                // rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+                rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
             }
 
             var targetVector = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * movement;
@@ -175,7 +168,6 @@ namespace _Test.Script
 
         public void Sprint()
         {
-            Debug.LogError("Sprinting");
             if (Time.time <= nextSprintTime)
                 return;
             if (!isGrounded)
@@ -189,14 +181,14 @@ namespace _Test.Script
             isSprinting = true;
             float startTime = Time.time;
             sprintEndTime = startTime + _sprintDuration;
-
+            float originSpeed = MoveSpeed;
             while (Time.time < sprintEndTime)
             {
-                Vector3 direction = rb.linearVelocity;
-                rb.AddForce(direction * (_sprintSpeed - MoveSpeed), ForceMode.VelocityChange);
+                MoveSpeed = _sprintSpeed;
                 yield return null;
             }
 
+            MoveSpeed = originSpeed;
             isSprinting = false;
             nextSprintTime = Time.time + _sprintCooldown; // Enforce cooldown
         }

@@ -37,7 +37,7 @@ Hit the button "Color update" to see skin color of your character be randomized,
 ![alt text](image-5.png)
 
 
-#### Update Nicknam
+#### Update Nickname
 
 Type to the textbox at the bottom right the name you want, then hit "Rename" 
 
@@ -46,3 +46,13 @@ Type to the textbox at the bottom right the name you want, then hit "Rename"
 The new name would appear at both clients
 
 ![alt text](image-7.png)
+
+
+### Packages In Use
+Fusion 2 and Fusion add-on
+SisyphusFramework (my custom library, for Singleton in GameManager)
+Using New Unity Input System
+Using Unity 6000
+
+### Extra
+The HR did told me to make sure the project can be opened for Macbook. Unfortunately, I have only Window Machine. I did set the Platform to Window, Mac, Linux. Hope it helps.
