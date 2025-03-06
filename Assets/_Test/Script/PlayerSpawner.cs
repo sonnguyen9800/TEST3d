@@ -8,9 +8,11 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     [SerializeField] private Transform _spawnPosTrans;
     public void PlayerJoined(PlayerRef player)
     {
+        Debug.Log("Player Join");
         if (player == Runner.LocalPlayer)
         {
-            Runner.Spawn(PlayerPrefab, _spawnPosTrans.position, Quaternion.identity);
+            var networkObject = Runner.Spawn(PlayerPrefab, _spawnPosTrans.position, Quaternion.identity);
+            //networkObject.gameObject.transform.SetParent( _spawnPosTrans.parent.transform);
         }
     }
 }

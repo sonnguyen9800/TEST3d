@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
+using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace _Test.Script
 {
-    public class SamplePlayerController : MonoBehaviour
+    public class SamplePlayerController : NetworkBehaviour
     {
     // Ground Movement
     [SerializeField]
@@ -97,14 +98,25 @@ namespace _Test.Script
 
     void FixedUpdate()
     {
+        return;
         MovePlayer();
         ApplyJumpPhysics();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
+        MovePlayer();
+        ApplyJumpPhysics();
+        InputSystem.Update();
     }
 
 
     void MovePlayer()
     {
 
+        if (_moveInput.magnitude == 0)
+            return;
         moveHorizontal = _moveInput.x;
         moveForward = _moveInput.y;
         Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
@@ -125,9 +137,6 @@ namespace _Test.Script
         
         var targetVector = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * movement;
         _meshRotate.Rotate(targetVector);
-
-       // RotateTowardMovementVector(targetVector);
-
     }
     public void Sprint()
     {
