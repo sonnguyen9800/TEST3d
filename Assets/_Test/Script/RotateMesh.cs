@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class RotateMesh : MonoBehaviour
+public class RotateMesh : NetworkBehaviour
 {
 
     public void Rotate(Vector3 movement)
