@@ -15,7 +15,6 @@ namespace _Test.Script
     private float moveHorizontal;
     private float moveForward;
 
-    [SerializeField] private Transform _targetLookUp;
     // Jumping
     public float jumpForce = 10f;
     public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
@@ -93,9 +92,6 @@ namespace _Test.Script
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
-        Vector3 direction = _targetLookUp.transform.position - transform.position;
-        Debug.DrawRay(transform.position, direction, Color.green);
-        //Debug.DrawLine(_targetLookUp.transform.position, transform.position);
 
     }
 
