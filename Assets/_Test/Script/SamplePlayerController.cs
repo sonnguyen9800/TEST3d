@@ -4,6 +4,7 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace _Test.Script
 {
@@ -49,6 +50,7 @@ namespace _Test.Script
 
     private float playerHeight;
 
+    [SerializeField] private MeshColorChanger _meshColorChanger = null;
     private void OnCollisionEnter(Collision other)
     {
 
@@ -56,6 +58,7 @@ namespace _Test.Script
         if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
         Debug.LogError("On Ground");
         isGrounded = true;
+        
     }
 
     
@@ -64,6 +67,9 @@ namespace _Test.Script
         if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
         Debug.LogError("On Air");
         isGrounded = false;
+        Color randomColor = new Color(Random.value, Random.value, Random.value);
+
+        _meshColorChanger.MeshColor = randomColor;
     }
 
     void Start()

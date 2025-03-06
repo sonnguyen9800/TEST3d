@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a56b40edb5c46c692ae93ab399de4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectColor: {r: 1, g: 1, b: 1, a: 1}
+  _MeshColor: {r: 0, g: 0, b: 0, a: 0}
   _meshRenderer: {fileID: 8439014578825742475}
 --- !u!114 &7322021444792746909
 MonoBehaviour:
@@ -398,6 +398,7 @@ MonoBehaviour:
   _sprintSpeed: 6
   _sprintDuration: 0.3
   _sprintCooldown: 1.5
+  _meshColorChanger: {fileID: 486789808688342746}
 --- !u!136 &7374568890289285933
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -440,6 +441,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 4688443595440896615}
   - {fileID: 8658538203787174035}
+  - {fileID: 486789808688342746}
   - {fileID: 7322021444792746909}
   - {fileID: 3824184293504752667}
   - {fileID: 5307106597968106161}

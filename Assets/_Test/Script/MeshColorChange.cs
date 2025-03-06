@@ -1,31 +1,27 @@
-﻿using UnityEngine.Serialization;
+﻿using Fusion;
+using UnityEngine.Serialization;
 
 namespace _Test.Script
 {
     using UnityEngine;
 
-    public class MeshColorChanger : MonoBehaviour
+    public class MeshColorChanger : NetworkBehaviour
     {
-        public Color objectColor = Color.white; // Exposed color variable
+        [Networked, OnChangedRender(nameof(ColorChanged))]
+        public Color MeshColor { get; set; } // Exposed color variable
 
         [FormerlySerializedAs("meshRenderer")] [SerializeField]
         private MeshRenderer _meshRenderer;
         
         private Material objectMaterial;
+        
 
-        void Start()
+        private void ColorChanged()
         {
+            _meshRenderer.material.color = MeshColor;
 
-            // Ensure we don't modify the shared material
-            objectMaterial = _meshRenderer.material;
-            objectMaterial.color = objectColor;
         }
-
-        void Update()
-        {
-            // Apply color change in real-time
-            objectMaterial.color = objectColor;
-        }
+        
     }
 
 }
