@@ -119,6 +119,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &74717241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74717243}
+  - component: {fileID: 74717242}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &74717242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74717241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d28e6645ea39264cb36fbd83c83d7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvas: {fileID: 1775342094}
+  _runner: {fileID: 1038657870}
+  _playerSpawner: {fileID: 1038657872}
+--- !u!4 &74717243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74717241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 905.0288, y: 313.68256, z: 591.15436}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &106635896
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +727,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1038657873}
+      - m_Target: {fileID: 74717242}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnRandomColorClick
         m_Mode: 1
@@ -1266,7 +1313,6 @@ GameObject:
   - component: {fileID: 1038657870}
   - component: {fileID: 1038657869}
   - component: {fileID: 1038657872}
-  - component: {fileID: 1038657873}
   m_Layer: 0
   m_Name: GameManager(Prototype Runner)
   m_TagString: Untagged
@@ -1414,19 +1460,6 @@ MonoBehaviour:
       m_Calls: []
   PlayerPrefab: {fileID: 5780794577237220046, guid: edc7c2d439a0d96408a05e2b22224783, type: 3}
   _spawnPosTrans: {fileID: 980619486}
---- !u!114 &1038657873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038657868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d28e6645ea39264cb36fbd83c83d7dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canvas: {fileID: 1775342094}
 --- !u!1 &1078932447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,3 +1931,4 @@ SceneRoots:
   - {fileID: 1038657871}
   - {fileID: 1775342092}
   - {fileID: 412906299}
+  - {fileID: 74717243}
