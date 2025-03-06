@@ -31,6 +31,7 @@ namespace _Test.Script
     [SerializeField]
     private float raycastDistance;
 
+    [SerializeField] private RotateMesh _meshRotate = null;
     private Vector2 _moveInput;
 
     private void OnCollisionEnter(Collision other)
@@ -53,8 +54,8 @@ namespace _Test.Script
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-
+        rb.inertiaTensor = rb.inertiaTensor;
+        rb.inertiaTensorRotation = rb.inertiaTensorRotation;
         // Set the raycast to be slightly beneath the player's feet
         playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
         raycastDistance = (playerHeight / 2) + 0.2f;
@@ -72,30 +73,7 @@ namespace _Test.Script
         if (isGrounded)
             Jump();
     }
-
-    public void OnMouseMove(InputAction.CallbackContext context)
-    {
-        
-    }
     
-    void Update()
-    {
-
-        // Checking when we're on the ground and keeping track of our ground check delay
-        if (!isGrounded && groundCheckTimer <= 0f)
-        {
-            Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-            //isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
-            Debug.DrawRay(rayOrigin, Vector3.down * raycastDistance, Color.red);
-
-        }
-        else
-        {
-            groundCheckTimer -= Time.deltaTime;
-        }
-
-    }
-
     private void OnDrawGizmos()
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
@@ -110,29 +88,24 @@ namespace _Test.Script
     {
         MovePlayer();
         ApplyJumpPhysics();
-        RotatePlayer();
+        //RotatePlayer();
+
     }
 
     
     
     private void RotatePlayer()
     {
-
-        Vector3 mousePos = Input.mousePosition;
-        var mousePose = Camera.main.ScreenToWorldPoint(mousePos);
-
-        Vector2 direction = _targetLookUp.transform.position - transform.position;
         
-        //transform.Rotate(newX, 0, 0);
-        //transform.localEulerAngles+=new Vector3(deltaRotation,0,0);
-        //transform.Rotate(deltaRotation, 0, 0, Space.Self);
+        Vector3 direction = _targetLookUp.transform.position - transform.position;
         
         transform.rotation = Quaternion.identity;
-        direction.x = 0;
+        direction.y = 0;
         float xAngle = Vector3.Angle(transform.forward, direction);
-        if (direction.y < 0)
+        if (direction.x < 0)
             xAngle *= -1;
-        transform.rotation = Quaternion.Euler(xAngle, 0, 0);
+        //transform.rotation = Quaternion.Euler(0, xAngle, 0);
+        rb.MoveRotation(Quaternion.Euler(0, xAngle, 0));
 //         headBone.rotation = Quaternon.identity; //Just to simplify calculation lets remove the current rotation for now
 //
 // //Get the vector from your head to the opponent
@@ -146,7 +119,31 @@ namespace _Test.Script
 //         headBone.rotation = Quaternion.Euler(xAngle, 0, 0);
 
 
+    }
 
+    public void OnMouseDown()
+    {
+
+    }
+
+
+    private void RotatePlayerByMouse()
+    {
+        var mousePos = Input.mousePosition;
+        Debug.LogError("Screen pos" + mousePos);
+        var globalMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        
+        Debug.LogError("Global pos:" + globalMousePos);
+        Vector3 direction = globalMousePos - transform.position;
+        Debug.LogError("Direction " + direction);
+
+        transform.rotation = Quaternion.identity;
+        direction.y = 0;
+        float xAngle = Vector3.Angle(transform.forward, direction);
+        if (direction.x < 0)
+            xAngle *= -1;
+        //transform.rotation = Quaternion.Euler(0, xAngle, 0);
+        rb.MoveRotation(Quaternion.Euler(0, xAngle, 0));
     }
 
     void MovePlayer()
@@ -161,15 +158,29 @@ namespace _Test.Script
         Vector3 velocity = rb.linearVelocity;
         velocity.x = targetVelocity.x;
         velocity.z = targetVelocity.z;
+        
         rb.linearVelocity = velocity;
 
         // If we aren't moving and are on the ground, stop velocity so we don't slide
         if (isGrounded && moveHorizontal == 0 && moveForward == 0)
         {
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+           // rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
         }
-    }
+        
+        var targetVector = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y, 0) * movement;
+        _meshRotate.Rotate(targetVector);
 
+       // RotateTowardMovementVector(targetVector);
+
+    }
+    private void RotateTowardMovementVector(Vector3 movementDirection)
+    {
+        if(movementDirection.magnitude == 0) { return; }
+        var rotation = Quaternion.LookRotation(movementDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 5.0f);
+        //rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, 5.0f));
+        
+    }
 
     void Jump()
     {
