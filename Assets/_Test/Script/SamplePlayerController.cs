@@ -119,7 +119,7 @@ namespace _Test.Script
 
         public void OnJumpTrigger()
         {
-            if (isGrounded)
+            if (isGrounded && _lockMovement == false)
                 Jump();
         }
 

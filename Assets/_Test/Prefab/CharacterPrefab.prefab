@@ -650,9 +650,9 @@ MonoBehaviour:
   raycastDistance: 0
   _meshRotate: {fileID: 7322021444792746909}
   _sprintSpeed: 6
-  _sprintDuration: 0.3
-  _sprintCooldown: 1.5
-  _meshColorChanger: {fileID: 486789808688342746}
+  _sprintDuration: 0.2
+  _sprintCooldown: 3
+  meshColorController: {fileID: 486789808688342746}
   nickNameController: {fileID: 1977427615904258502}
 --- !u!136 &7374568890289285933
 CapsuleCollider:
