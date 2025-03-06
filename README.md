@@ -23,7 +23,7 @@ If you run both the stanalone file (the build) and the Editor, you should see so
 
 ![alt text](image-4.png)
 
-In case two players not see each other, exit the scene and replay would help! Sometime two clients couldn't find each other in Shared Mode.
+In case two players not see each other, exit the scene and replay would help! Sometime two clients couldn't find each other in Shared Mode so you would like to restart the scene/game several time.
 
 Now, you can test basic features such as Movement, Sprint, Jump, ...
 
