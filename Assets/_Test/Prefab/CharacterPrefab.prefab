@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 486789808688342746}
   - component: {fileID: 7322021444792746909}
   - component: {fileID: 3824184293504752667}
+  - component: {fileID: 1977427615904258502}
   m_Layer: 0
   m_Name: CharacterMesh
   m_TagString: Untagged
@@ -133,6 +134,20 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &1977427615904258502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2420176041563836830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09b3331f6ca1874c8475d084ddf94a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tmpName: {fileID: 138310801808073266}
+  _Name: DefaultName
 --- !u!1 &4133558087341025503
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +653,7 @@ MonoBehaviour:
   _sprintDuration: 0.3
   _sprintCooldown: 1.5
   _meshColorChanger: {fileID: 486789808688342746}
+  nickNameController: {fileID: 1977427615904258502}
 --- !u!136 &7374568890289285933
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -683,6 +699,7 @@ MonoBehaviour:
   - {fileID: 486789808688342746}
   - {fileID: 7322021444792746909}
   - {fileID: 3824184293504752667}
+  - {fileID: 1977427615904258502}
   - {fileID: 5307106597968106161}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &8658538203787174035

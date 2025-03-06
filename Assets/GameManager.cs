@@ -1,8 +1,10 @@
 using System;
 using _Test.Script;
 using Fusion;
+using TMPro;
 using UnityCommunity.UnitySingleton;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -16,9 +18,14 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private PlayerSpawner _playerSpawner = null;
     private int _gameManagerInstanceId;
 
+
+    [SerializeField] private TMP_InputField _inputFieldNickName = null;
+    private SamplePlayerController _charController = null;
     public void SetLocalPlayer(NetworkObject networkObject)
     {
         _cachedLocalPlayer = networkObject;
+        _charController = _cachedLocalPlayer.GetComponent<SamplePlayerController>();
+
     }
     public void ToggleCanvas(bool enable)
     {
@@ -33,23 +40,48 @@ public class GameManager : MonoSingleton<GameManager>
     
     public void OnRandomColorClick()
     {
-        Debug.Log($"OnRandomColorClick called on GameManager (ID: {_gameManagerInstanceId})");
 
-        if (_cachedLocalPlayer == null)
-        {
-            Debug.LogWarning("Local player object is null in OnRandomColorClick");
-            return;
-        }
-        
-
-        SamplePlayerController characterCtrl = _cachedLocalPlayer.GetComponent<SamplePlayerController>();
-        
-        if (characterCtrl == null)
+        if (_charController == null)
         {
             Debug.LogWarning("MeshColorChanger component not found on local player");
             return;
         }
-        characterCtrl.UpdateColor();
+        _charController.UpdateColor();
     }
+
+    public void OnRenameButtonClick()
+    {
+        if (_charController == null)
+        {
+            Debug.LogWarning("MeshColorChanger component not found on local player");
+            return;
+        }
+        
+        string name = _inputFieldNickName.text;
+        _charController.UpdateName(name);
+        _inputFieldNickName.DeactivateInputField(true);
+    }
+
+    public void LockMovement()
+    {
+        if (_charController == null)
+        {
+            Debug.LogWarning("MeshColorChanger component not found on local player");
+            return;
+        }
+
+        _charController.LockMovement(true);
+    }
+    public void UnlockMovement()
+    {
+        if (_charController == null)
+        {
+            Debug.LogWarning("MeshColorChanger component not found on local player");
+            return;
+        }
+
+        _charController.LockMovement(false);
+    }
+
     
 }

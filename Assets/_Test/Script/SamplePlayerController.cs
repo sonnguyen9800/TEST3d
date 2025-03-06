@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Text;
 using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -39,9 +40,11 @@ namespace _Test.Script
         private float sprintEndTime = 0f;
         private float nextSprintTime = 0f;
 
+        private bool _lockMovement = false;
         private float playerHeight;
 
         [SerializeField] private MeshColorChanger _meshColorChanger = null;
+        [FormerlySerializedAs("_nickNameChanger")] [SerializeField] private NickNameController nickNameController = null;
 
         private void OnCollisionEnter(Collision other)
         {
@@ -66,6 +69,37 @@ namespace _Test.Script
             Color randomColor = new Color(Random.value, Random.value, Random.value);
 
             _meshColorChanger.MeshColor = randomColor;
+        }
+
+        
+        string GenerateRandomName(int minLength, int maxLength)
+        {
+            string consonants = "bcdfghjklmnpqrstvwxyz";
+            string vowels = "aeiou";
+
+            int length = Random.Range(minLength, maxLength + 1);
+            StringBuilder name = new StringBuilder();
+
+            // Start with an uppercase consonant
+            name.Append(char.ToUpper(consonants[Random.Range(0, consonants.Length)]));
+
+            for (int i = 1; i < length; i++)
+            {
+                if (i % 2 == 0)
+                    name.Append(consonants[Random.Range(0, consonants.Length)]);
+                else
+                    name.Append(vowels[Random.Range(0, vowels.Length)]);
+            }
+
+            return name.ToString();
+        }
+        public void UpdateName()
+        {
+            nickNameController.Name = GenerateRandomName(3, 8);
+        }
+        public void UpdateName(string value)
+        {
+            nickNameController.Name = value;
         }
         void Start()
         {
@@ -113,6 +147,8 @@ namespace _Test.Script
 
         void MovePlayer()
         {
+            if (_lockMovement)
+                return;
             if (_moveInput.magnitude == 0)
                 return;
             moveHorizontal = _moveInput.x;
@@ -202,6 +238,11 @@ namespace _Test.Script
             {
                 LocalPlayer = null;
             }
+        }
+
+        public void LockMovement(bool isLocked)
+        {
+            _lockMovement = isLocked;
         }
     }
 }

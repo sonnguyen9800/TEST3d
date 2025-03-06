@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using System;
+using Fusion;
 using UnityEngine.Serialization;
 
 namespace _Test.Script
@@ -14,7 +15,12 @@ namespace _Test.Script
         private MeshRenderer _meshRenderer;
         
         private Material objectMaterial;
-        
+
+
+        private void Start()
+        {
+            _meshRenderer.material.color = MeshColor;
+        }
 
         private void ColorChanged()
         {
