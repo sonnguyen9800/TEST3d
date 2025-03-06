@@ -1282,9 +1282,9 @@ MonoBehaviour:
   groundCheckDelay: 0.3
   raycastDistance: 0
   _meshRotate: {fileID: 708886147}
-  sprintSpeed: 6
-  sprintDuration: 0.6
-  sprintCooldown: 1.5
+  _sprintSpeed: 6
+  _sprintDuration: 0.3
+  _sprintCooldown: 1.5
 --- !u!136 &669123008
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1436,7 +1436,7 @@ GameObject:
   - component: {fileID: 1078932450}
   - component: {fileID: 1078932449}
   - component: {fileID: 1078932452}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: TargetLookup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace _Test.Script
 {
@@ -34,6 +35,17 @@ namespace _Test.Script
     [SerializeField] private RotateMesh _meshRotate = null;
     private Vector2 _moveInput;
 
+    [SerializeField] 
+    float _sprintSpeed = 6f;
+    [SerializeField] 
+
+    private float _sprintDuration = 0.4f; // Sprint lasts for 2 seconds
+    [SerializeField] 
+    private float _sprintCooldown = 1.5f; // Cooldown before sprinting again
+
+    private bool isSprinting = false;
+    private float sprintEndTime = 0f;
+    private float nextSprintTime = 0f;
 
     private float playerHeight;
 
@@ -131,29 +143,23 @@ namespace _Test.Script
          StartCoroutine(OnSprint());
     }
 
-    public float sprintSpeed = 10f;
-    public float sprintDuration = 2f; // Sprint lasts for 2 seconds
-    public float sprintCooldown = 3f; // Cooldown before sprinting again
 
-    private bool isSprinting = false;
-    private float sprintEndTime = 0f;
-    private float nextSprintTime = 0f;
     
     private IEnumerator OnSprint()
     {
         isSprinting = true;
         float startTime = Time.time;
-        sprintEndTime = startTime + sprintDuration;
+        sprintEndTime = startTime + _sprintDuration;
 
         while (Time.time < sprintEndTime)
         {
             Vector3 direction = rb.linearVelocity;
-            rb.AddForce(direction * (sprintSpeed - MoveSpeed), ForceMode.VelocityChange);
+            rb.AddForce(direction * (_sprintSpeed - MoveSpeed), ForceMode.VelocityChange);
             yield return null;
         }
 
         isSprinting = false;
-        nextSprintTime = Time.time + sprintCooldown; // Enforce cooldown
+        nextSprintTime = Time.time + _sprintCooldown; // Enforce cooldown
     }
     
     void Jump()
