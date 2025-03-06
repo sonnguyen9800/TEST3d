@@ -649,9 +649,10 @@ MonoBehaviour:
   groundCheckDelay: 0.3
   raycastDistance: 0
   _meshRotate: {fileID: 7322021444792746909}
-  _sprintSpeed: 6
-  _sprintDuration: 0.2
+  _sprintSpeed: 10
+  _sprintDuration: 1
   _sprintCooldown: 3
+  isSprinting: 0
   meshColorController: {fileID: 486789808688342746}
   nickNameController: {fileID: 1977427615904258502}
 --- !u!136 &7374568890289285933

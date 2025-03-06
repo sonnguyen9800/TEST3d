@@ -36,6 +36,7 @@ namespace _Test.Script
         [SerializeField] private float _sprintDuration = 0.4f; // Sprint lasts for 2 seconds
         [SerializeField] private float _sprintCooldown = 1.5f; // Cooldown before sprinting again
 
+        [SerializeField]
         private bool isSprinting = false;
         private float sprintEndTime = 0f;
         private float nextSprintTime = 0f;
@@ -46,6 +47,9 @@ namespace _Test.Script
         [FormerlySerializedAs("_meshColorChanger")] [SerializeField] private MeshColorController meshColorController = null;
         [FormerlySerializedAs("_nickNameChanger")] [SerializeField] private NickNameController nickNameController = null;
 
+        private float _normalSpeed = 0;
+        
+        
         private void OnCollisionEnter(Collision other)
         {
             // Check if the collided layer is part of the target layer mask
@@ -109,6 +113,7 @@ namespace _Test.Script
             // Set the raycast to be slightly beneath the player's feet
             playerHeight = GetComponent<CapsuleCollider>().height * transform.localScale.y;
             raycastDistance = (playerHeight / 2) + 0.2f;
+            _normalSpeed = MoveSpeed;
         }
 
         public void Move(InputAction.CallbackContext context)
@@ -181,14 +186,13 @@ namespace _Test.Script
             isSprinting = true;
             float startTime = Time.time;
             sprintEndTime = startTime + _sprintDuration;
-            float originSpeed = MoveSpeed;
+            MoveSpeed = _sprintSpeed;
+
             while (Time.time < sprintEndTime)
             {
-                MoveSpeed = _sprintSpeed;
                 yield return null;
             }
-
-            MoveSpeed = originSpeed;
+            MoveSpeed = _normalSpeed;
             isSprinting = false;
             nextSprintTime = Time.time + _sprintCooldown; // Enforce cooldown
         }
