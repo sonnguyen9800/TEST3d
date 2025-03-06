@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,12 +28,14 @@ namespace _Test.Script
     private float groundCheckTimer = 0f;
     [SerializeField]
     private float groundCheckDelay = 0.3f;
-    private float playerHeight;
     [SerializeField]
     private float raycastDistance;
 
     [SerializeField] private RotateMesh _meshRotate = null;
     private Vector2 _moveInput;
+
+
+    private float playerHeight;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -88,63 +91,8 @@ namespace _Test.Script
     {
         MovePlayer();
         ApplyJumpPhysics();
-        //RotatePlayer();
-
     }
 
-    
-    
-    private void RotatePlayer()
-    {
-        
-        Vector3 direction = _targetLookUp.transform.position - transform.position;
-        
-        transform.rotation = Quaternion.identity;
-        direction.y = 0;
-        float xAngle = Vector3.Angle(transform.forward, direction);
-        if (direction.x < 0)
-            xAngle *= -1;
-        //transform.rotation = Quaternion.Euler(0, xAngle, 0);
-        rb.MoveRotation(Quaternion.Euler(0, xAngle, 0));
-//         headBone.rotation = Quaternon.identity; //Just to simplify calculation lets remove the current rotation for now
-//
-// //Get the vector from your head to the opponent
-//         Vector3 toOpponent = opponent - headBone.position;
-//         toOpponent.x = 0; //Put the vector in the YZ plane so that we get a simple x rotation. This is ultimately the direction we want to look in.
-//
-//         float xAngle = Vector3.Angle(headbone.forward, toOpponent);
-// //Returns the shortest angle (between 0 and 180), so we need to normalize from -180 to 180
-//         if(toOpponent.y < 0) xAngle *= -1;
-//
-//         headBone.rotation = Quaternion.Euler(xAngle, 0, 0);
-
-
-    }
-
-    public void OnMouseDown()
-    {
-
-    }
-
-
-    private void RotatePlayerByMouse()
-    {
-        var mousePos = Input.mousePosition;
-        Debug.LogError("Screen pos" + mousePos);
-        var globalMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        
-        Debug.LogError("Global pos:" + globalMousePos);
-        Vector3 direction = globalMousePos - transform.position;
-        Debug.LogError("Direction " + direction);
-
-        transform.rotation = Quaternion.identity;
-        direction.y = 0;
-        float xAngle = Vector3.Angle(transform.forward, direction);
-        if (direction.x < 0)
-            xAngle *= -1;
-        //transform.rotation = Quaternion.Euler(0, xAngle, 0);
-        rb.MoveRotation(Quaternion.Euler(0, xAngle, 0));
-    }
 
     void MovePlayer()
     {
@@ -173,15 +121,41 @@ namespace _Test.Script
        // RotateTowardMovementVector(targetVector);
 
     }
-    private void RotateTowardMovementVector(Vector3 movementDirection)
+    public void Sprint()
     {
-        if(movementDirection.magnitude == 0) { return; }
-        var rotation = Quaternion.LookRotation(movementDirection);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 5.0f);
-        //rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, 5.0f));
-        
+        Debug.LogError("Sprinting");
+        if (Time.time <= nextSprintTime)
+            return;
+        if (!isGrounded)
+            return;
+         StartCoroutine(OnSprint());
     }
 
+    public float sprintSpeed = 10f;
+    public float sprintDuration = 2f; // Sprint lasts for 2 seconds
+    public float sprintCooldown = 3f; // Cooldown before sprinting again
+
+    private bool isSprinting = false;
+    private float sprintEndTime = 0f;
+    private float nextSprintTime = 0f;
+    
+    private IEnumerator OnSprint()
+    {
+        isSprinting = true;
+        float startTime = Time.time;
+        sprintEndTime = startTime + sprintDuration;
+
+        while (Time.time < sprintEndTime)
+        {
+            Vector3 direction = rb.linearVelocity;
+            rb.AddForce(direction * (sprintSpeed - MoveSpeed), ForceMode.VelocityChange);
+            yield return null;
+        }
+
+        isSprinting = false;
+        nextSprintTime = Time.time + sprintCooldown; // Enforce cooldown
+    }
+    
     void Jump()
     {
         isGrounded = false;
