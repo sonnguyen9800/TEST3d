@@ -43,7 +43,7 @@ namespace _Test.Script
         private bool _lockMovement = false;
         private float playerHeight;
 
-        [SerializeField] private MeshColorChanger _meshColorChanger = null;
+        [FormerlySerializedAs("_meshColorChanger")] [SerializeField] private MeshColorController meshColorController = null;
         [FormerlySerializedAs("_nickNameChanger")] [SerializeField] private NickNameController nickNameController = null;
 
         private void OnCollisionEnter(Collision other)
@@ -68,7 +68,7 @@ namespace _Test.Script
         {
             Color randomColor = new Color(Random.value, Random.value, Random.value);
 
-            _meshColorChanger.MeshColor = randomColor;
+            meshColorController.MeshColor = randomColor;
         }
 
         

@@ -12,7 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [SerializeField] private CanvasGroup _canvas = null;
     [SerializeField] private NetworkRunner _runner = null;
-    private MeshColorChanger _meshColorChanger = null;
+    private MeshColorController _meshColorController = null;
     private NetworkObject _cachedLocalPlayer = null;
 
     [SerializeField] private PlayerSpawner _playerSpawner = null;

@@ -6,7 +6,7 @@ namespace _Test.Script
 {
     using UnityEngine;
 
-    public class MeshColorChanger : NetworkBehaviour
+    public class MeshColorController : NetworkBehaviour
     {
         [Networked, OnChangedRender(nameof(ColorChanged))]
         public Color MeshColor { get; set; } // Exposed color variable
