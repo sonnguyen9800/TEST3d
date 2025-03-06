@@ -49,10 +49,10 @@ The new name would appear at both clients
 
 
 ### Packages In Use
-Fusion 2 and Fusion add-on
-SisyphusFramework (my custom library, for Singleton in GameManager)
-Using New Unity Input System
-Using Unity 6000
+- Use Fusion 2 and Fusion add-on (to use *NetworkRigidbody3d*)
+- Use *SisyphusFramework* (my custom library, for Singleton in GameManager)
+- Use New Unity Input System to handle input event
+- Use Unity 6000
 
 ### Extra
 The HR did told me to make sure the project can be opened for Macbook. Unfortunately, I have only Window Machine. I did set the Platform to Window, Mac, Linux. Hope it helps.
