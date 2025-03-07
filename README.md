@@ -36,10 +36,13 @@ Ensure you have [Unity](https://unity.com/) installed. This project was develope
 
 ### 3. Open the Project in Unity
 
-1. Launch Unity Hub.
-2. Click on the **"Open"** button.
-3. Navigate to the cloned `TEST3d` directory and select it.
-4. Unity will load the project; this may take a few moments.
+- Launch **Unity Hub**.
+- Click on the **"Add"** button. Then hit **Add Project from Disk**
+
+![alt text](image-12.png)
+
+- Navigate to the cloned `TEST3d` directory and select it.
+- Unity will load the project; this may take a few moments.
 	
 ### 4. Configure Photon Fusion
 
@@ -95,6 +98,7 @@ If you run both the stanalone file (the build) and the Editor, you should see so
 
 ![alt text](image-4.png)
 
+#### 5. Warning
 In case two players not see each other, exit the scene and replay would help! Sometime two clients couldn't find each other in Shared Mode so you would like to restart the scene/game several time.
 
 
@@ -123,11 +127,10 @@ The new name would appear at both clients
 ![alt text](image-7.png)
 
 
-
 # Packages In Use
 - **Unity 6000.0.23f1** - Unity Game Engine
 - Use **Fusion 2** and **Fusion add-on** (to use *NetworkRigidbody3d*) to implement multiplayer feature. Also, I use built-in UI of Fusion to start the network.
-- Use *SisyphusFramework* (my custom library, for Singleton in GameManager)
+- Use **SisyphusFramework** (my custom library, for *Singleton* in *GameManager*)
 - Use **New Unity Input System** to handle input event from keyboard.
 - **TextMeshPro** - Advanced text rendering.
 
