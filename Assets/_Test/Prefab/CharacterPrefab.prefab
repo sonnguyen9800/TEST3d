@@ -636,11 +636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3043eb24404f439457cabe257d8d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2515026609457641752}
+  _rb: {fileID: 2515026609457641752}
   MoveSpeed: 5
   jumpForce: 10
-  fallMultiplier: 2.5
-  ascendMultiplier: 2
   isGrounded: 1
   groundLayer:
     serializedVersion: 2

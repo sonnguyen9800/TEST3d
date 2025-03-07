@@ -55,7 +55,7 @@ namespace _Test.Script
         {
             // Check if the collided layer is part of the target layer mask
             if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
-            Debug.LogError("On Ground");
+//            Debug.LogError("On Ground");
             isGrounded = true;
         }
 
@@ -63,7 +63,7 @@ namespace _Test.Script
         private void OnCollisionExit(Collision other)
         {
             if (((1 << other.gameObject.layer) & groundLayer) == 0) return;
-            Debug.LogError("On Air");
+           // Debug.LogError("On Air");
             isGrounded = false;
 
         }
