@@ -4,7 +4,7 @@ This is a demo created in Unity engine that includes:
 - A basic 3d scene and a controllable character
 - Simple top-down-view Camera
 - Simple movement with Jump and Sprint mechanics and standard W-A-S-D key
-- TMultiplayer features in Fusion 2 (Shared Mode).
+- Multiplayer features in Fusion 2 (Shared Mode).
   
 ## Table of Contents
 
@@ -62,6 +62,7 @@ To test the multiplayer functionality, it's must to have at least two clients re
 ![alt text](image-1.png)
 
 You can hit Build and Run (see the picture below) to start the build and run the game immediately. Select a destination for build folder. The build would take less than 1 minute. Below are a build folder after the build process take place
+
 ![alt text](image-9.png)
 
 You can always start the game by start the ```Test.exe``` executable file.
@@ -97,7 +98,7 @@ If you run both the stanalone file (the build) and the Editor, you should see so
 In case two players not see each other, exit the scene and replay would help! Sometime two clients couldn't find each other in Shared Mode so you would like to restart the scene/game several time.
 
 
-Now, you can test basic features such as Movement, Sprint, Jump, ...
+Now, you can test basic features such as **Movement**, **Sprint**, **Jump**, ...
 
 
 ### B. Testing Multiplayer Feature
